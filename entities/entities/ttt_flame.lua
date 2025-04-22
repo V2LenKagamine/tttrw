@@ -116,7 +116,7 @@ function ENT:Think()
 	if CLIENT then return end
 
     if( vFireInstalled ) then 
-        local newfire = CreateVFireBall(150, 130, self:GetPos(), self:GetVelocity()) 
+        local newfire = CreateVFireBall(80, 60, self:GetPos(), self:GetVelocity()) 
         self:Remove()
         return 
     end
