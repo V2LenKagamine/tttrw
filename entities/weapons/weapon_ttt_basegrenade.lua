@@ -29,6 +29,8 @@ SWEP.ThrowVelocity = 800
 SWEP.Bounciness = 0.3
 SWEP.DamageMultiplier = 1
 SWEP.RangeMultiplier = 1
+SWEP.ThrowMultiplier = 1
+
 
 DEFINE_BASECLASS "weapon_tttbase"
 function SWEP:SetupDataTables()
@@ -55,7 +57,7 @@ function SWEP:Throw()
 		e:SetOrigin(self:GetOwner():EyePos())
 		e:SetOwner(self:GetOwner())
 		e.Owner = self:GetOwner()
-		e:SETVelocity(self:GetOwner():GetAimVector() * self.ThrowVelocity + self:GetOwner():GetVelocity() * 0.8)
+		e:SETVelocity((self:GetOwner():GetAimVector() * self.ThrowVelocity + self:GetOwner():GetVelocity() * 0.8) * self.ThrowMultiplier)
 		e:SetDieTime(self:GetThrowStart() + self.Primary.Delay)
 		e:SetBounciness(self.Bounciness)
 		e:SetWeapon(self)
