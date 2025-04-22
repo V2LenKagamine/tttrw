@@ -115,6 +115,11 @@ end
 function ENT:Think()
 	if CLIENT then return end
 
+    if( vFireInstalled ) then 
+        local newfire = CreateVFireBall(150, 130, self:GetPos(), self:GetVelocity()) 
+        self:Remove()
+        return 
+    end
 	if self.dietime < CurTime() then
 		if self:GetExplodeOnDeath() then
 			local success, err = pcall(self.Explode, self)
