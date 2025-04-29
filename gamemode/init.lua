@@ -7,6 +7,8 @@ include "sh_files.lua"
 DEFINE_BASECLASS "gamemode_base"
 util.AddNetworkString "tttrw_console_print"
 
+CreateConVar("DoFloatHealth","1",FCVAR_ARCHIVE + FCVAR_REPLICATED,"Do we allow player health to be tracked as a float, or round up?",0,1)
+
 function PLAYER:ConsolePrint(text)
 	net.Start "tttrw_console_print"
 		net.WriteString(text)
@@ -72,11 +74,13 @@ end
 function GM:PlayerTakeDamage(targ, wpn, atk, dmg, dmginfo)
 	self:DamageLogs_PlayerTakeDamage(targ, dmginfo)
 	local flt = targ:GetHealthFloat()
-	flt = flt - (dmg % 1)
-	if (flt < 0) then
-		flt = flt + 1
-		dmginfo:SetDamage(dmginfo:GetDamage() + 1)
-	end
+    if(GetConVar("DoFloatHealth" ~= 1)) then
+        flt = flt - (dmg % 1)
+        if (flt < 0) then
+            flt = flt + 1
+            dmginfo:SetDamage(dmginfo:GetDamage() + 1)
+        end     
+    end
 
 	targ:SetHealthFloat(flt)
 end
