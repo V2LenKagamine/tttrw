@@ -439,7 +439,9 @@ function GM:SV_PlayerSpawn(ply)
 	local state = ttt.GetRoundState()
 
 	if (state == ttt.ROUNDSTATE_WAITING) then
-		round.Prepare()
+        if(#player.GetAll() >= ttt_minimum_players:GetInt()) then
+		    round.Prepare()
+        end
 	elseif (state ~= ttt.ROUNDSTATE_PREPARING and not ply.AllowSpawn) then
 		printf("Player %s <%s> joined while round is active, killing silently", ply:Nick(), ply:SteamID())
 		ply:KillSilent()
