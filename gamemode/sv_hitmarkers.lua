@@ -17,11 +17,13 @@ util.AddNetworkString "tttrw_damage_number"
 function GM:CreateHitmarkers(vic, dmg)
     local atk = dmg:GetAttacker()
 
-    if (not IsValid(atk) or not vic:IsPlayer() or dmg:GetDamage() <= 0) then
+    if (not IsValid(atk) or (not vic:IsPlayer() and not vic:IsNextBot()) or dmg:GetDamage() <= 0) then
         return
     end
 
-    if (not hook.Run("PlayerShouldTakeDamage", vic, atk)) then
+    if(vic:IsNextBot() and not vic:Alive()) then return end
+
+    if (not hook.Run("PlayerShouldTakeDamage", vic, atk) and not vic:IsNextBot()) then
         return
     end
 

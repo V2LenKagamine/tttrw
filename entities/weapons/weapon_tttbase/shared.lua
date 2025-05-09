@@ -94,7 +94,7 @@ function SWEP:GetHitgroupScale(hg)
 	if (hg == HITGROUP_HEAD) then
 		return self.HeadshotMultiplier or 1
 	end
-	return scales[hitgroup] or 1
+	return scales[hg] or 1
 end
 
 function SWEP:ScaleDamage(hitgroup, dmg)
