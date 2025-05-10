@@ -244,7 +244,8 @@ local function TryStart()
 	end
 
 	local plys = ttt.GetEligiblePlayers()
-	if (#plys < ttt_minimum_players:GetInt()) then
+    local votedmode = GetConVar("pluto_current_gamemode"):GetString() or "ttt"
+	if (#plys < ttt_minimum_players:GetInt() or votedmode ~= "ttt") then
 		round.SetState(ttt.ROUNDSTATE_WAITING, 0)
 		return false
 	end
@@ -439,7 +440,8 @@ function GM:SV_PlayerSpawn(ply)
 	local state = ttt.GetRoundState()
 
 	if (state == ttt.ROUNDSTATE_WAITING) then
-        if(#player.GetAll() >= ttt_minimum_players:GetInt()) then
+        local mode = GetConVar("pluto_current_gamemode"):GetString() or "ttt"
+        if(#player.GetAll() >= ttt_minimum_players:GetInt() and mode == "ttt") then
 		    round.Prepare()
         end
 	elseif (state ~= ttt.ROUNDSTATE_PREPARING and not ply.AllowSpawn) then
