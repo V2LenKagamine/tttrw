@@ -13,7 +13,7 @@ SWEP.ViewModelFOV       = 54
 SWEP.Ortho = {0, 5, angle = Angle(0, -90, 5) }
 
 SWEP.Base                  = "weapon_tttbase"
-
+DEFINE_BASECLASS("weapon_tttbase")
 SWEP.Bullets = {
 	HullSize = 0,
 	Num = 1,
@@ -42,6 +42,8 @@ SWEP.Spawnable             = true
 SWEP.ViewModel             = "models/weapons/cstrike/c_pist_deagle.mdl"
 SWEP.WorldModel            = "models/weapons/w_pist_deagle.mdl"
 
+SWEP.RecoilTimer = 0
+
 SWEP.Ironsights = {
 	Pos = Vector(-6.361, -3.701, 2.15),
 	Angle = Vector(0, 0, 0),
@@ -55,3 +57,19 @@ SWEP.RecoilInstructions = {
 	Interval = 1,
 	Angle(-50),
 }
+
+function SWEP:Think()
+    BaseClass.Think(self)
+    if(self.RecoilTimer > 0) then
+        self.RecoilTimer = self.RecoilTimer - 1
+    end
+end
+
+function SWEP:GetSpread()
+	return (Vector(0.2, 0.2) * math.min(1,self.RecoilTimer/(1.25/engine.TickInterval())))
+end
+
+function SWEP:PrimaryAttack()
+    BaseClass.PrimaryAttack(self)
+    self.RecoilTimer = math.floor((self.RecoilTimer or 0) + (1.25/engine.TickInterval()))
+end
