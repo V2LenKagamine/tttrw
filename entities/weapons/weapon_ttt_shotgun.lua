@@ -25,19 +25,14 @@ SWEP.Bullets = {
 }
 
 DEFINE_BASECLASS "weapon_tttbase"
-function SWEP:GetHitgroupScale(hg)
-	if (hg == HITGROUP_RIGHTARM or hg == HITGROUP_LEFTARM) then
-		return 0.5
-	end
-
-	return BaseClass.GetHitgroupScale(self, hg)
-end
 
 SWEP.HeadshotMultiplier = 1.5
+SWEP.PointBlankMult = 0.5
+SWEP.PointBlankRange = 200
 
 SWEP.TTTCompat = {"weapon_zm_shotgun"}
 
-SWEP.Primary.Damage        = 5.5
+SWEP.Primary.Damage        = 6.5
 SWEP.Primary.Delay         = 0.7
 SWEP.Primary.RecoilTiming  = 0.1
 SWEP.Primary.Recoil        = 7

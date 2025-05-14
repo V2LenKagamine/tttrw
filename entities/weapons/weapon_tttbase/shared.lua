@@ -267,6 +267,12 @@ function SWEP:DoDamageDropoff(tr, dmginfo)
 	local max = self:GetDamageDropoffRangeMax()
 	local min = self:GetDamageMinimumPercent()
 
+    if(self.PointBlankRange and self.PointBlankMult) then
+        if(distance < self.PointBlankRange) then
+            dmginfo:ScaleDamage(1 + (self.PointBlankMult - (self.PointBlankMult * (distance/self.PointBlankRange))))
+        end
+    end
+
 	if (distance > dropoff) then
 		local pct = math.min(1, (distance - dropoff) / (max - dropoff))
 		dmginfo:ScaleDamage(1 - pct * (1 - min))
