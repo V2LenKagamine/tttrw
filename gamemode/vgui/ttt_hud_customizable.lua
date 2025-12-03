@@ -425,12 +425,8 @@ ttt.hud.createinput("spectatingname", function()
 	return targ:Nick()
 end)
 
-ttt.hud.createinput("spectating", function()
-	return LocalPlayer():GetObserverMode() ~= OBS_MODE_NONE
-end)
-
-ttt.hud.createinput("spectatingplayer", function()
-	return IsValid(ttt.GetHUDTarget())
+ttt.hud.createinput("doshowspectator", function()
+	return LocalPlayer():GetObserverMode() ~= OBS_MODE_NONE && IsValid(ttt.GetHUDTarget())
 end)
 
 ttt.hud.createinput("guncolor", function()
@@ -889,8 +885,8 @@ function INPUTS:SetRequires(req)
 	-- workaround
 end
 
-function INPUTS:SetVisible(b)
-	self:SetVisible(b)
+function INPUTS:SetVisible()
+	self:SetVisible(LocalPlayer():GetObserverMode() ~= OBS_MODE_NONE && IsValid(ttt.GetHUDTarget())) --Todo: Unhack this
 end
 
 ttt.hud.registerelement("base", INPUTS)

@@ -684,7 +684,7 @@ local default = [=[{
 		},
 		{
 			"visible": {
-				"lua": "spectating and spectatingplayer"
+				"lua": "doshowspectator"
 			},
 			"element": "label",
 			"font": {
