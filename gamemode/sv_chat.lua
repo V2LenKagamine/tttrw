@@ -29,7 +29,14 @@ function GM:AllowPlayerRTV(ply)
 		return false, "You've already RTVed", true
 	end
 
-	return ttt.GetRoundNumber() >= 2 and GetConVar("pluto_current_gamemode"):GetString() == "ttt", "Wait for " .. (3 - ttt.GetRoundNumber()) .. " rounds"
+    if (GetConVar("pluto_current_gamemode"):GetString() == "ttt" and ttt.GetRoundNumber() >= 2) then
+        return false,"Wait for " .. (3 - ttt.GetRoundNumber()) .. " rounds"
+    end
+    if (GetConVar("pluto_current_gamemode"):GetString() == "raid") then
+        return true,""
+    end
+
+	return false,"Something is broken!"
 end
 
 function GM:PlayerRTVFailed(ply, reason)
