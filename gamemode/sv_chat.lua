@@ -29,7 +29,7 @@ function GM:AllowPlayerRTV(ply)
 		return false, "You've already RTVed", true
 	end
 
-    if (GetConVar("pluto_current_gamemode"):GetString() == "ttt" and ttt.GetRoundNumber() >= 2) then
+    if (GetConVar("pluto_current_gamemode"):GetString() == "ttt" and ttt.GetRoundNumber() <= 2) then
         return false,"Wait for " .. (3 - ttt.GetRoundNumber()) .. " rounds"
     end
     if (GetConVar("pluto_current_gamemode"):GetString() == "raid") then
